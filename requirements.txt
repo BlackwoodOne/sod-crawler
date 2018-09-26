@@ -1,0 +1,4 @@
+ ws4py
+stanfordcorenlp
+urllib3
+youtube-dl

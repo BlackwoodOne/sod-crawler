@@ -1,0 +1,14 @@
+version: '2.1'
+
+networks:
+  sod-crawler:
+
+services:
+  speechcrawler:
+    build: .
+    restart: on-failure
+    networks:
+      sod-crawler:
+    volumes:
+      - ${PWD}/out:/app/data
+    container_name: speechcrawler

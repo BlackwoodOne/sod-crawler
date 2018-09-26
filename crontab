@@ -1,0 +1,1 @@
+0 1 * * * /usr/bin/python /app/speechCrawler.py

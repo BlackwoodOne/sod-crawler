@@ -1,0 +1,67 @@
+version: '2.1'
+
+networks:
+  sod-crawler:
+
+services:
+  speechcrawler:
+    build: .
+    restart: on-failure
+    networks:
+      sod-crawler:
+    volumes:
+      - ${PWD}/out:/app/data
+    container_name: speechcrawler
+  
+  gstreamer:
+    image: jcsilva/docker-kaldi-gstreamer-server
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - ${PWD}/gstreamer/model:/opt/models
+    container_name: gstreamer
+    networks:
+      sod-crawler:    
+          
+  nodcore:
+    image: uhhlt/nodcore
+    volumes:
+      - ${PWD}/out/nod/german:/app/content
+    depends_on:
+          db:
+            condition: service_healthy
+    networks:
+      sod-crawler:
+
+  nodweb:
+    image: uhhlt/nodweb
+    restart: always
+    ports:
+      - 10008:9000
+    depends_on:
+          db:
+            condition: service_healthy
+    networks:
+      sod-crawler:
+
+  db:
+      image: mariadb
+      environment:
+        - MYSQL_RANDOM_ROOT_PASSWORD=yes
+        - MYSQL_DATABASE=nodcore
+        - MYSQL_USER=nod
+        - MYSQL_PORT=3306
+        - MYSQL_PASSWORD=nod
+      volumes:
+        - ${PWD}/nod-data/:/var/lib/mysql
+        - ./mycustom.cnf:/etc/mysql/conf.d/custom.cnf
+      command: ["--character-set-server=utf8", "--collation-server=utf8_bin"]
+      healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-pnod", "-unod"]
+        interval: 20s
+        timeout: 10s
+        retries: 10
+      networks:
+        sod-crawler:
+

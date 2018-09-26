@@ -15,7 +15,7 @@ services:
   
   gstreamer:
     image: jcsilva/docker-kaldi-gstreamer-server
-    restart: always
+    restart: on-failure
     ports:
       - 8080:80
     volumes:

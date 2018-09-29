@@ -1,4 +1,4 @@
-#sod-crawler
+# Speech of the Day Crawler
 
 This project is crawling, downloading and transcribing Youtube playlists and videos of daily published news channels. The projects main aim is to provide the transcribed videos to the Network of the Day [NoD](https://github.com/uhh-lt/NoDCore) project. 
 

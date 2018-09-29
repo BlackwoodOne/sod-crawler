@@ -64,18 +64,18 @@ In the docker-compose Nod stack there is a Cronjob configured which will execute
 You can find the Network of the Day website under: `http://127.0.0.1:10008/nod/`
 
 ## Data Structure
-####Downloads
+#### Downloads
 The videos are downloaded to `data/downloads/<upload_date>/<upload_date>_<uploader_id>_<video_id>` .
 
 During the process, transcribe-files (.stt) and sentence-split-files (.wts) are generated. The final export is by default written to `data/nod/german` . The docker filepaths are provided via docker volume to the host `PATH_TO_Crawler/out/` . 
 
-###Configs
+### Configs
 All config file live in the `config/` folder. The applications _config.ini_, as well as the crawler sources. During the process, files for the next pipeline steps are created.
 
 ## Options and Setings
 Settings can be made in the `configs.ini` . By default the configuration is made to work with the docker-compose NoD stack. You may want to change this for a local setup.
 
-###[DEFAULT]
+### [DEFAULT]
 * **skipCrawling**(False): Skipping the youtubeDL crawler in the pipeline
 * **skipTranscribe**(False): Skipping the kaldi-gstreamer transcription
 * **skipWordToSentence**(False): Skipping th CoreNLP sentence splitting and true casing

@@ -22,7 +22,9 @@ services:
       - ${PWD}/gstreamer/model:/opt/models
     container_name: gstreamer
     networks:
-      sod-crawler:    
+      sod-crawler:  
+    stdin_open: true
+    tty: true  
           
   nodcore:
     image: uhhlt/nodcore

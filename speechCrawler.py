@@ -1,5 +1,6 @@
 import urllib.request, urllib.parse, urllib.error
 import time
+import datetime
 import os
 import io
 import youtubeDL
@@ -34,6 +35,13 @@ def main():
     stanfordNlpPath = defConfig['stanfordNlpPath']
     #stanfordNlpPort = int(defConfig['stanfordNlpPort'])
 
+    if(operationDate == 'today'):
+        operationDate = datetime.datetime.today().strftime('%Y%m%d')
+    elif(operationDate == 'yesterday'):
+        yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
+        operationDate = yesterday.strftime('%Y%m%d')
+
+    print('Operation Date:' + operationDate)
 
     #Step 1: check sources, download videos and convert to mp3
     if(not skipCrawling):
